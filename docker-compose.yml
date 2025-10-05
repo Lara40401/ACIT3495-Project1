@@ -1,0 +1,46 @@
+services:
+  auth_service:
+    build: ./auth_service
+    ports: 
+      - "3000:3000"
+    networks: 
+      - app-network
+    environment: 
+      - JWT_SECRET=${JWT_SECRET}
+    
+  data_entry: 
+    build: ./data_entry
+    port: 
+      - "5000:5000"
+    depends_on: 
+      - auth_service
+      - db
+    networks: 
+      - app-network
+    environment: 
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+  db: 
+    image: mysql:8.1
+    environment: 
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes: 
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports: 
+      - "3306:3306"
+    networks: 
+      - app-network
+
+volumes: 
+  db_data:
+networks: 
+  app-network:

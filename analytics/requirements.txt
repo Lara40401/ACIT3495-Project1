@@ -1,3 +1,3 @@
-flask
-mysql-connector-python
+mysql-connector-python==8.1.0
 pymongo
+python-dotenv

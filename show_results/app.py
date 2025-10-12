@@ -13,7 +13,7 @@ DB_NAME = os.getenv("MONGO_INITDB_DATABASE")
 AUTH_SERVICE_URL = "http://auth_service:3000"
 
 def get_analytics():
-    client = pymongo.MongoClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@mongo:27017/")
+    client = pymongo.MongoClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@mongo:27017/",authSource=DB_NAME)
     mongo_db = client[DB_NAME]
     mongo_collection = mongo_db["course_stats"]
     analytics = list(mongo_collection.find({}, {"_id": 0, "course": 1, "max": 1, "min": 1, "avg": 1}))

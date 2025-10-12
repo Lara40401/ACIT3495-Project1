@@ -50,11 +50,12 @@ def calculations():
         return []
     
     finally:
-        connector.close()
+        if connector:
+            connector.close()
 
 def store_results(results):
     try:
-        client = pymongo.MongoClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@mongo:27017/")
+        client = pymongo.MongoClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@mongo:27017/",authSource=DB_NAME)
         mongo_db = client[DB_NAME]
         mongo_collection = mongo_db["course_stats"]
         mongo_collection.delete_many({})

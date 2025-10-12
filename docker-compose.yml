@@ -1,22 +1,21 @@
-version: "3.8"
-
 services:
   # MySQL database
   db:
-    image: mysql:8.1
+    image: mysql:5.7
     container_name: project1_mysql
-    environment: 
+    environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-    volumes: 
+    volumes:
       - db_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports: 
+    ports:
       - "3306:3306"
-    networks: 
+    networks:
       - app-network
+    mem_limit: 256m
 
   # MongoDB 
   mongo:
@@ -40,11 +39,11 @@ services:
   auth_service:
     build: ./auth_service
     container_name: project1_auth_service
-    ports: 
+    ports:
       - "3000:3000"
-    networks: 
+    networks:
       - app-network
-    environment: 
+    environment:
       - JWT_SECRET=${JWT_SECRET}
 
   # Data entry service
@@ -53,7 +52,7 @@ services:
     container_name: project1_data_entry
     ports:
       - "5000:5000"
-    depends_on: 
+    depends_on:
       - auth_service
       - db
     networks:
@@ -104,5 +103,5 @@ volumes:
   db_data:
   mongo_data:
 
-networks: 
+networks:
   app-network:

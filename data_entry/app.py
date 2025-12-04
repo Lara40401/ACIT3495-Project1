@@ -13,7 +13,7 @@ db_config = {
     'database': os.getenv("MYSQL_DATABASE")
 }
 
-AUTH_SERVICE_URL = 'http://auth_service:3000'
+AUTH_SERVICE_URL = 'http://auth-service:3000'
 courses = ['Math', 'English', 'Science', 'History', 'Social Studies']
 
 @app.route('/')

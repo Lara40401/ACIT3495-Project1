@@ -1,10 +1,11 @@
 # ACIT3495-Project2
 
 ## Run the command as following order:
-### Mysql
+### Mysql and Secrets
 1. `kubectl apply -f pwd-config.yaml`
 2. `kubectl apply -f mysql-initdb-configmap.yaml`
-3. `kubectl apply -f mysql-svc.yaml`
+3. `kubectl apply -f mysql-deployment.yaml`
+4. `kubectl apply -f mysql-svc.yaml`
 ### MongoDB
 4. `kubectl apply -f mongo-initdb-configmap.yaml`
 5. `kubectl apply -f mongo-deployment.yaml`
